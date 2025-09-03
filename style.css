@@ -1,0 +1,227 @@
+/* === Base === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+  background-color: #000;
+}
+
+/* === Nebula Glowing Background === */
+.nebula-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -3;
+  background: radial-gradient(circle, #0b0012, #000);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.nebula-bg::before,
+.nebula-bg::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, #5f00ff55, #ff008044, transparent 70%);
+  filter: blur(160px);
+  opacity: 0.2;
+  animation: moveBlobs 30s ease-in-out infinite alternate;
+}
+
+.nebula-bg::after {
+  background: radial-gradient(circle, #00ffe055, #00ffcc33, transparent 70%);
+  animation-duration: 50s;
+}
+
+@keyframes moveBlobs {
+  0% {
+    transform: translate(-30%, -20%) scale(1);
+  }
+  50% {
+    transform: translate(10%, 10%) scale(1.2);
+  }
+  100% {
+    transform: translate(-20%, -30%) scale(1);
+  }
+}
+
+/* === Canvas Layer === */
+#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+}
+
+/* === Main Layout === */
+.main-container {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* === Glitch Logo === */
+.logo {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #00ffc3;
+  text-shadow: 0 0 10px #00ffc3, 0 0 20px #00ffc3;
+  animation: glitchFlicker 2s infinite alternate;
+  position: relative;
+}
+
+.logo span {
+  color: #ff00e1;
+  text-shadow: 0 0 10px #ff00e1, 0 0 20px #ff00e1;
+}
+
+/* Glitch overlays */
+.logo::before,
+.logo::after {
+  content: "Google";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: #0ff;
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+}
+
+.logo::before {
+  animation: glitchTop 2s infinite linear;
+  color: #0ff;
+}
+
+.logo::after {
+  animation: glitchBottom 2s infinite linear;
+  color: #f0f;
+}
+
+@keyframes glitchTop {
+  0%, 100% { clip: rect(0, 9999px, 0, 0); transform: translate(0, 0); }
+  10% { clip: rect(0, 9999px, 5px, 0); transform: translate(-2px, -2px); }
+  20% { clip: rect(0, 9999px, 10px, 0); transform: translate(2px, 1px); }
+}
+
+@keyframes glitchBottom {
+  0%, 100% { clip: rect(0, 9999px, 0, 0); transform: translate(0, 0); }
+  10% { clip: rect(10px, 9999px, 20px, 0); transform: translate(2px, 2px); }
+  20% { clip: rect(20px, 9999px, 30px, 0); transform: translate(-1px, -2px); }
+}
+
+@keyframes glitchFlicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+  }
+  20%, 22%, 24%, 55% {
+    opacity: 0.6;
+    text-shadow: none;
+  }
+}
+
+/* === Input === */
+.search-box input {
+  width: 400px;
+  padding: 14px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  box-shadow: 0 0 10px #00ffc3, 0 0 20px #00ffc3;
+  outline: none;
+}
+
+.search-box input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+/* === Buttons === */
+.buttons button {
+  margin: 10px;
+  padding: 12px 30px;
+  border: 2px solid #00ffc3;
+  background: transparent;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 1rem;
+  text-shadow: 0 0 5px #00ffc3;
+  box-shadow: 0 0 10px #00ffc3;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+.buttons {
+  position: relative;
+  perspective: 1000px;
+}
+
+.buttons button:hover {
+  background: #00ffc3;
+  color: #000;
+}
+
+/* .cursor-orb {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00ffc3 0%, #0ff 60%, transparent 80%);
+  pointer-events: none;
+  z-index: 1000;
+  filter: blur(4px);
+  mix-blend-mode: screen;
+  transform: translate(-50%, -50%);
+} */
+
+.cursor-trail {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00ffc3 0%, #0ff 60%, transparent 80%);
+  pointer-events: none;
+  z-index: 999;
+  filter: blur(6px);
+  mix-blend-mode: screen;
+  transform: translate(-50%, -50%);
+  opacity: 1.5;
+  animation: trailFade 0.9s ease-out forwards;
+}
+
+@keyframes trailFade {
+  0% {
+    opacity: 0.6;
+    transform: scale(1) translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2) translate(-50%, -50%);
+  }
+}
+
+
